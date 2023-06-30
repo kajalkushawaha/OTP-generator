@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+#define OTP_LENGTH 6
+
+// Function to generate a random OTP of the specified length
+char* generateOTP(int length) {
+    // Allocate memory for the OTP string, adding an extra character for the null terminator
+    char* otp = (char*)malloc((length + 1) * sizeof(char));
+    
+    const char* digits = "0123456789"; // Available digits for OTP generation
+    int digitsLength = strlen(digits); // Number of available digits
+    
+    // Seed the random number generator with the current time
+    srand(time(NULL));
+    
+    // Generate each digit of the OTP
+    for (int i = 0; i < length; i++) {
+        // Generate a random index within the valid range of digits
+        int randomIndex = rand() % digitsLength;
+        
+        // Assign the randomly selected digit to the OTP string
+        otp[i] = digits[randomIndex];
+    }
+    
+    // Add the null terminator to the OTP string
+    otp[length] = '\0';
+    
+    // Return the generated OTP
+    return otp;
+}
+
+int main() {
+    // Generate an OTP of the specified length
+    char* generatedOTP = generateOTP(OTP_LENGTH);
+    
+    // Print the generated OTP
+    printf("Generated OTP: %s\n", generatedOTP);
+    
+    // Free the allocated memory for the OTP
+    free(generatedOTP);
+
+    return 0;
+}
